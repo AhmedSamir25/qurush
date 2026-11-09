@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"qurush/model"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -31,6 +32,9 @@ func ConnectionDB() {
 	})
 	if err != nil {
 		log.Fatalf("Database Connection Failed: %v", err)
+	}
+	if err := db.AutoMigrate(&model.User{}); err != nil {
+		log.Fatal("migration failed:", err)
 	}
 	DBConnection = db
 }
